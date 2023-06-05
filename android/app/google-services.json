@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "489878259755",
+    "project_id": "gestionate-50c05",
+    "storage_bucket": "gestionate-50c05.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:489878259755:android:b877d782885629f8f3426e",
+        "android_client_info": {
+          "package_name": "com.alukard.gestionrh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "489878259755-co03eft3octlm28k07siutlt8td8rund.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alukard.gestionrh",
+            "certificate_hash": "55d530fd602e5fde37c40c5a0c9b698e1a8f3677"
+          }
+        },
+        {
+          "client_id": "489878259755-c8rt0ut3dln6vut3k2lmsjnarn4h5l25.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKOmjvVR9al_TUhvEoHtDHzlkRw363FGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "489878259755-c8rt0ut3dln6vut3k2lmsjnarn4h5l25.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

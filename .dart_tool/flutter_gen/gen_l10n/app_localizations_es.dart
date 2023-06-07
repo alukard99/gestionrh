@@ -35,7 +35,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stats => 'Estadísticas';
 
   @override
-  String get department => 'Departamentos';
+  String get department => 'Departamento';
 
   @override
   String get employees => 'Empleados';
@@ -198,4 +198,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get googleSignInError => 'Error al iniciar sesión con Google.';
+
+  @override
+  String get delete => 'Borrar';
+
+  @override
+  String get create => 'Crear';
+
+  @override
+  String get createEmployee => 'Crear empleado';
 }

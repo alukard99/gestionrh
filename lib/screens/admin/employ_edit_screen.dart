@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class EmployeeEditScreen extends StatefulWidget {
   final String employeeId;
 
@@ -20,7 +21,6 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen> {
   void initState() {
     super.initState();
 
-    // Carga el registro del empleado de Firestore
     FirebaseFirestore.instance.collection('empleados').doc(widget.employeeId).get().then((snapshot) {
       setState(() {
         final data = snapshot.data() as Map<String, dynamic>;
@@ -33,7 +33,6 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen> {
 
   void _saveEmployee() {
     if (_formKey.currentState!.validate()) {
-      // Si el formulario es correcto, se sube a Firestore
       _formKey.currentState!.save();
       FirebaseFirestore.instance.collection('empleados').doc(widget.employeeId).update({
         'dni': _dni,
@@ -43,16 +42,19 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen> {
     }
   }
 
+  void _deleteEmployee() async {
+    await FirebaseFirestore.instance.collection('empleados').doc(widget.employeeId).delete();
+    Navigator.of(context).pop();  // regresar a la pantalla anterior
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Si los datos aún no se han cargado, muestra un spinner.
     if (_dni == null || _puesto == null || _departamento == null) {
       return Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
-    // Una vez que los datos estén disponibles, muestra los campos de formulario.
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.editEmployee),
@@ -61,8 +63,7 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            // Campos para editar al empleado
-            TextFormField( //Campo DNI
+            TextFormField(
               initialValue: _dni,
               decoration: InputDecoration(labelText: AppLocalizations.of(context)!.dni),
               validator: (value) {
@@ -75,7 +76,7 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen> {
                 _dni = value;
               },
             ),
-            TextFormField( //Campo puesto
+            TextFormField(
               initialValue: _puesto,
               decoration: InputDecoration(labelText: AppLocalizations.of(context)!.position),
               validator: (value) {
@@ -88,7 +89,7 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen> {
                 _puesto = value;
               },
             ),
-            TextFormField( //Campo departamento
+            TextFormField(
               initialValue: _departamento,
               decoration: InputDecoration(labelText: AppLocalizations.of(context)!.department),
               validator: (value) {
@@ -104,6 +105,14 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen> {
             ElevatedButton(
               onPressed: _saveEmployee,
               child: Text(AppLocalizations.of(context)!.save),
+            ),
+            ElevatedButton(
+              onPressed: _deleteEmployee,
+              child: Text(AppLocalizations.of(context)!.delete),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red, // background
+                onPrimary: Colors.white, // foreground
+              ),
             ),
           ],
         ),

@@ -158,7 +158,7 @@ abstract class AppLocalizations {
   /// No description provided for @department.
   ///
   /// In es, this message translates to:
-  /// **'Departamentos'**
+  /// **'Departamento'**
   String get department;
 
   /// No description provided for @employees.
@@ -484,6 +484,24 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Error al iniciar sesión con Google.'**
   String get googleSignInError;
+
+  /// No description provided for @delete.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar'**
+  String get delete;
+
+  /// No description provided for @create.
+  ///
+  /// In es, this message translates to:
+  /// **'Crear'**
+  String get create;
+
+  /// No description provided for @createEmployee.
+  ///
+  /// In es, this message translates to:
+  /// **'Crear empleado'**
+  String get createEmployee;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

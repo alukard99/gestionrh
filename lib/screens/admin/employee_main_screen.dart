@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'employ_edit_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'employ_edit_screen.dart';
+import 'new_employee_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class EmployeeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,6 +19,17 @@ class EmployeeScreen extends StatelessWidget {
               showSearch(
                 context: context,
                 delegate: EmployeeSearch("dni"), // Aquí se proporciona "dni" como campo de búsqueda
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NewEmployeeScreen(), // Navega a la pantalla de creación de empleados
+                ),
               );
             },
           ),

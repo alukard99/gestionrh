@@ -9,7 +9,7 @@
   "admin": "Administracion",
   "options": "Opciones",
   "stats": "Estadísticas",
-  "department": "Departamentos",
+  "department": "Departamento",
   "employees": "Empleados",
   "name": "Nombre",
   "description": "Descripción",
@@ -63,5 +63,8 @@
   "succesfulDepartment": "Departamento creado con éxito",
   "userNotInColection": "El usuario no está en la colección",
   "googleSignIn": "Iniciar sesión con Google",
-  "googleSignInError": "Error al iniciar sesión con Google."
+  "googleSignInError": "Error al iniciar sesión con Google.",
+  "delete": "Borrar",
+  "create": "Crear",
+  "createEmployee": "Crear empleado"
 }

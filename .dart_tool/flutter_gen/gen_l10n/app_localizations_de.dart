@@ -198,4 +198,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get googleSignInError => 'Error al iniciar sesión con Google.';
+
+  @override
+  String get delete => 'Borrar';
+
+  @override
+  String get create => 'Crear';
+
+  @override
+  String get createEmployee => 'Crear empleado';
 }

@@ -6,7 +6,7 @@ import 'calendar_screen.dart';
 import 'add_hours_screen.dart';
 import 'stats_screen.dart';
 import 'admin_screen.dart';
-import 'options/options_screen.com.dart';
+import 'options/options_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {

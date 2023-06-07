@@ -1,0 +1,4 @@
+#Tue Jun 06 19:01:10 CEST 2023
+base.0=E\:\\Proyecto\\gestionate\\gestionrh\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

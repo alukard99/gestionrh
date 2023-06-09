@@ -8,7 +8,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get calendar => 'Kalender';
 
   @override
-  String get addHours => 'Add Stunden';
+  String get addHours => 'Stunden hinzufügen';
 
   @override
   String get hours => 'Stunden';
@@ -23,7 +23,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get year => 'Jahr';
 
   @override
-  String get home => 'Start';
+  String get home => 'Startseite';
 
   @override
   String get admin => 'Verwaltung';
@@ -35,19 +35,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stats => 'Statistiken';
 
   @override
-  String get department => 'Abteilungen';
+  String get department => 'Abteilung';
 
   @override
   String get employees => 'Mitarbeiter';
 
   @override
-  String get name => 'Nombre';
+  String get name => 'Name';
 
   @override
-  String get description => 'Descripción';
+  String get description => 'Beschreibung';
 
   @override
-  String get manager => 'Gerente';
+  String get manager => 'Manager';
 
   @override
   String get plsaddhours => 'Bitte Stunden eingeben';
@@ -56,61 +56,61 @@ class AppLocalizationsDe extends AppLocalizations {
   String get plsaddint => 'Bitte eine ganze Zahl eingeben';
 
   @override
-  String get plschoosedate => 'Wählen Sie ein Datum aus dem Kalender';
+  String get plschoosedate => 'Wählen Sie ein Datum im Kalender';
 
   @override
-  String get plsaddday => 'Bitte geben Sie den Tag ein';
+  String get plsaddday => 'Bitte den Tag eingeben';
 
   @override
-  String get plsaddmonth => 'Bitte geben Sie den Monat ein';
+  String get plsaddmonth => 'Bitte den Monat eingeben';
 
   @override
-  String get plsaddyear => 'Bitte geben Sie das Jahr ein';
+  String get plsaddyear => 'Bitte das Jahr eingeben';
 
   @override
-  String get plsaddemployee => 'Por favor, introduce un ID de usuario';
+  String get plsaddemployee => 'Bitte geben Sie eine Benutzer-ID ein';
 
   @override
-  String get plsadddepartment => 'Por favor, introduce un departamento';
+  String get plsadddepartment => 'Bitte Abteilung eingeben';
 
   @override
-  String get plsadddni => 'Por favor, introduce un DNI';
+  String get plsadddni => 'Bitte geben Sie eine DNI ein';
 
   @override
-  String get plsaddposition => 'Por favor, introduce un puesto';
+  String get plsaddposition => 'Bitte geben Sie eine Position ein';
 
   @override
-  String get plsaddsalary => 'Por favor, introduce un salario';
+  String get plsaddsalary => 'Bitte geben Sie ein Gehalt ein';
 
   @override
-  String get plsaddname => 'Por favor, introduce un nombre';
+  String get plsaddname => 'Bitte geben Sie einen Namen ein';
 
   @override
   String get category => 'Kategorie';
 
   @override
-  String get normalHours => 'Normale Stunden';
+  String get normalHours => 'Normale';
 
   @override
-  String get extraHours => 'Überstunden';
+  String get extraHours => 'Extra';
 
   @override
-  String get vacationHours => 'Urlaubsstunden';
+  String get vacationHours => 'Urlaub';
 
   @override
-  String get medicalLeaveHours => 'Krankheitsstunden';
+  String get medicalLeaveHours => 'Krankheit';
 
   @override
-  String get festiveHours => 'Feiertagsstunden';
+  String get festiveHours => 'Festtage';
 
   @override
-  String get unknowCategory => 'Categoría desconocida';
+  String get unknowCategory => 'Unbekannte Kategorie';
 
   @override
   String get dayswithoutdata => 'Tage ohne Daten in diesem Monat';
 
   @override
-  String get noData => 'Keine Daten zur Anzeige';
+  String get noData => 'Keine Daten zum Anzeigen';
 
   @override
   String get save => 'Änderungen speichern';
@@ -161,50 +161,50 @@ class AppLocalizationsDe extends AppLocalizations {
   String get december => 'Dezember';
 
   @override
-  String get userId => 'ID de usuario';
+  String get userId => 'Benutzer-ID';
 
   @override
-  String get position => 'Puesto';
+  String get position => 'Position';
 
   @override
-  String get salary => 'Salario';
+  String get salary => 'Gehalt';
 
   @override
-  String get addEmployee => 'Crear empleado';
+  String get addEmployee => 'Mitarbeiter erstellen';
 
   @override
-  String get addDepartment => 'Crear departamento';
+  String get addDepartment => 'Abteilung erstellen';
 
   @override
-  String get edit => 'Editar';
+  String get edit => 'Bearbeiten';
 
   @override
-  String get editEmployee => 'Editar empleado';
+  String get editEmployee => 'Mitarbeiter bearbeiten';
 
   @override
   String get dni => 'DNI';
 
   @override
-  String get succesfulEmployee => 'Empleado creado con éxito';
+  String get succesfulEmployee => 'Mitarbeiter erfolgreich erstellt';
 
   @override
-  String get succesfulDepartment => 'Departamento creado con éxito';
+  String get succesfulDepartment => 'Abteilung erfolgreich erstellt';
 
   @override
-  String get userNotInColection => 'El usuario no está en la colección';
+  String get userNotInColection => 'Der Benutzer ist nicht in der Sammlung';
 
   @override
-  String get googleSignIn => 'Iniciar sesión con Google';
+  String get googleSignIn => 'Mit Google anmelden';
 
   @override
-  String get googleSignInError => 'Error al iniciar sesión con Google.';
+  String get googleSignInError => 'Fehler beim Anmelden mit Google.';
 
   @override
-  String get delete => 'Borrar';
+  String get delete => 'Löschen';
 
   @override
-  String get create => 'Crear';
+  String get create => 'Erstellen';
 
   @override
-  String get createEmployee => 'Crear empleado';
+  String get createEmployee => 'Mitarbeiter erstellen';
 }

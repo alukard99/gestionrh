@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gestionrh/widgets/db_control.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'calendar_screen.dart';
 import 'add_hours_screen.dart';
@@ -17,6 +16,29 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   // Agregar el índice de la página actual
   int _currentIndex = 2;
+  bool _isAdmin = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIfAdmin();
+  }
+  //Comprueba si el usuario es administrador
+  void _checkIfAdmin() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    final String userId = user != null ? user.uid : '';
+
+    final QuerySnapshot adminUsers = await FirebaseFirestore.instance
+        .collection('adminUsers') //El userId de los admin se encuentra en la colección "adminUsers"
+        .where('userId', isEqualTo: userId)
+        .get();
+
+    if (adminUsers.docs.isNotEmpty) {
+      setState(() {
+        _isAdmin = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +79,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onItemTapped(int index) {
+    if (index == 3 && !_isAdmin) {
+      // Si el usuario no es administrador y toca la opción de administrador, muestra un mensaje y no cambia la screen.
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('No tienes permiso para acceder a esta página.')));
+      return;
+    }
+
     setState(() {
       _currentIndex = index;
     });

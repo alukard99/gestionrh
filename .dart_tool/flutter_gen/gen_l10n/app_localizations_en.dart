@@ -35,19 +35,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stats => 'Statistics';
 
   @override
-  String get department => 'Departments';
+  String get department => 'Department';
 
   @override
   String get employees => 'Employees';
 
   @override
-  String get name => 'Nombre';
+  String get name => 'Name';
 
   @override
-  String get description => 'Descripción';
+  String get description => 'Description';
 
   @override
-  String get manager => 'Gerente';
+  String get manager => 'Manager';
 
   @override
   String get plsaddhours => 'Please enter hours';
@@ -56,7 +56,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get plsaddint => 'Please enter an integer';
 
   @override
-  String get plschoosedate => 'Select a date from the calendar';
+  String get plschoosedate => 'Choose a date from the calendar';
 
   @override
   String get plsaddday => 'Please enter the day';
@@ -68,49 +68,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String get plsaddyear => 'Please enter the year';
 
   @override
-  String get plsaddemployee => 'Por favor, introduce un ID de usuario';
+  String get plsaddemployee => 'Please enter a user ID';
 
   @override
-  String get plsadddepartment => 'Por favor, introduce un departamento';
+  String get plsadddepartment => 'Please enter a department';
 
   @override
-  String get plsadddni => 'Por favor, introduce un DNI';
+  String get plsadddni => 'Please enter a DNI';
 
   @override
-  String get plsaddposition => 'Por favor, introduce un puesto';
+  String get plsaddposition => 'Please enter a position';
 
   @override
-  String get plsaddsalary => 'Por favor, introduce un salario';
+  String get plsaddsalary => 'Please enter a salary';
 
   @override
-  String get plsaddname => 'Por favor, introduce un nombre';
+  String get plsaddname => 'Please enter a name';
 
   @override
   String get category => 'Category';
 
   @override
-  String get normalHours => 'Normal hours';
+  String get normalHours => 'Normal';
 
   @override
-  String get extraHours => 'Extra hours';
+  String get extraHours => 'Extra';
 
   @override
-  String get vacationHours => 'Vacation hours';
+  String get vacationHours => 'Vacation';
 
   @override
-  String get medicalLeaveHours => 'Medical leave hours';
+  String get medicalLeaveHours => 'Medical leave';
 
   @override
-  String get festiveHours => 'Holiday hours';
+  String get festiveHours => 'Festive';
 
   @override
-  String get unknowCategory => 'Categoría desconocida';
+  String get unknowCategory => 'Unknown category';
 
   @override
   String get dayswithoutdata => 'Days without data this month';
 
   @override
-  String get noData => 'No data to display';
+  String get noData => 'No data to show';
 
   @override
   String get save => 'Save changes';
@@ -161,50 +161,50 @@ class AppLocalizationsEn extends AppLocalizations {
   String get december => 'December';
 
   @override
-  String get userId => 'ID de usuario';
+  String get userId => 'User ID';
 
   @override
-  String get position => 'Puesto';
+  String get position => 'Position';
 
   @override
-  String get salary => 'Salario';
+  String get salary => 'Salary';
 
   @override
-  String get addEmployee => 'Crear empleado';
+  String get addEmployee => 'Create employee';
 
   @override
-  String get addDepartment => 'Crear departamento';
+  String get addDepartment => 'Create department';
 
   @override
-  String get edit => 'Editar';
+  String get edit => 'Edit';
 
   @override
-  String get editEmployee => 'Editar empleado';
+  String get editEmployee => 'Edit employee';
 
   @override
   String get dni => 'DNI';
 
   @override
-  String get succesfulEmployee => 'Empleado creado con éxito';
+  String get succesfulEmployee => 'Employee successfully created';
 
   @override
-  String get succesfulDepartment => 'Departamento creado con éxito';
+  String get succesfulDepartment => 'Department successfully created';
 
   @override
-  String get userNotInColection => 'El usuario no está en la colección';
+  String get userNotInColection => 'User is not in the collection';
 
   @override
-  String get googleSignIn => 'Iniciar sesión con Google';
+  String get googleSignIn => 'Sign in with Google';
 
   @override
-  String get googleSignInError => 'Error al iniciar sesión con Google.';
+  String get googleSignInError => 'Error signing in with Google.';
 
   @override
-  String get delete => 'Borrar';
+  String get delete => 'Delete';
 
   @override
-  String get create => 'Crear';
+  String get create => 'Create';
 
   @override
-  String get createEmployee => 'Crear empleado';
+  String get createEmployee => 'Create employee';
 }

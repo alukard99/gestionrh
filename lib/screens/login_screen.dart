@@ -17,9 +17,39 @@ class _LoginScreenState extends State<LoginScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<UserCredential> signInWithGoogle() async {
-    await _googleSignIn.signOut(); // Asegura que la sesión previa (si existe) se cierre
+    // Cierra la sesión actual antes de iniciar una nueva
+    await _auth.signOut();
+    await _googleSignIn.signOut();
+
     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    if (googleUser == null) {
+      throw Exception('Google Sign In failed.');
+    }
+
+    final GoogleSignInAuthentication googleAuth =
+    await googleUser.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    return await _auth.signInWithCredential(credential);
+  }
+
+  Future<UserCredential> createUserWithGoogle() async {
+    // Cierra la sesión actual antes de iniciar una nueva
+    await _auth.signOut();
+    await _googleSignIn.signOut();
+
+    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+    // Lanzar una excepción si Google SignIn falla
+    if (googleUser == null) {
+      throw Exception("Google Sign In failed.");
+    }
+
+    final GoogleSignInAuthentication? googleAuth = await googleUser.authentication;
 
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
@@ -28,17 +58,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
     final UserCredential userCredential = await _auth.signInWithCredential(credential);
 
-    final QuerySnapshot result = await _firestore
-        .collection('empleados')
-        .where('userId', isEqualTo: userCredential.user?.uid)
-        .get();
+    // Comprobar si el usuario ya existe en la colección "userAccounts"
+    final userAccountsCollection = _firestore.collection('userAccounts');
+    final userDoc = userAccountsCollection.doc(userCredential.user?.uid);
+    final doc = await userDoc.get();
 
-    final List<DocumentSnapshot> documents = result.docs;
-    if (documents.length == 0) {
-      // Si el usuario no está en la colección 'empleados', cerramos la sesión
-      await _auth.signOut();
-      throw Exception(AppLocalizations.of(context)!.userNotInColection);
+    if (doc.exists) {
+      throw Exception('Usuario ya existente, inicia sesión');
     }
+
+    // Si el usuario no existe, crear un nuevo documento en la colección "userAccounts"
+    userDoc.set({
+      'userId': userCredential.user?.uid,
+      'name': userCredential.user?.displayName,
+    });
 
     return userCredential;
   }
@@ -47,19 +80,37 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            try {
-              await signInWithGoogle();
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-            } catch (e) {
-              // Mostrar el error en pantalla
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(e.toString()),
-              ));
-            }
-          },
-          child: Text(AppLocalizations.of(context)!.googleSignIn),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () async {
+                try {
+                  await signInWithGoogle();
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(e.toString()),
+                  ));
+                }
+              },
+              child: Text(AppLocalizations.of(context)!.googleSignIn),
+            ),
+            SizedBox(height: 20),  // Espaciado
+            ElevatedButton(
+              onPressed: () async {
+                try {
+                  await createUserWithGoogle();
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(e.toString()),
+                  ));
+                }
+              },
+              child: Text('Crear cuenta con Google'),  // Puedes reemplazar este texto con una versión localizada
+            ),
+          ],
         ),
       ),
     );

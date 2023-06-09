@@ -7,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations_extension.dart';
 class StatsScreen extends StatefulWidget {
   @override
   _StatsScreenState createState() => _StatsScreenState();
+
 }
 
 class _StatsScreenState extends State<StatsScreen> {
@@ -24,7 +25,7 @@ class _StatsScreenState extends State<StatsScreen> {
   };
 
   final List<int> _years = List<int>.generate(101, (i) => 2000 + i);
-  List<int> _months = List<int>.generate(12, (i) => i);
+  String _userId = '';
 
 
   @override
@@ -43,66 +44,82 @@ class _StatsScreenState extends State<StatsScreen> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.stats),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          _sections.isNotEmpty
-              ? Container(
-            height: 400, // define el alto del contenedor
-            child: PieChart(
-              PieChartData(
-                sections: _sections,
-              ),
-            ),
-          )
-              : Expanded(
-            child: Center(
-              child: Text(
-                AppLocalizations.of(context)!.noData,
-                style: const TextStyle(
-                  fontSize: 24,
-                  color: Colors.grey,
+          Column(
+            children: [
+              _sections.isNotEmpty
+                  ? Container(
+                height: 400, // define el alto del contenedor
+                child: PieChart(
+                  PieChartData(
+                    sections: _sections,
+                  ),
+                ),
+              )
+                  : Expanded(
+                child: Center(
+                  child: Text(
+                    AppLocalizations.of(context)!.noData,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              DropdownButton<String>(
-                value: _selectedMonth.month.toString(),
-                items: List.generate(12, (index) {
-                  return DropdownMenuItem<String>(
-                    value: (index + 1).toString(),
-                    child: Text(
-                        AppLocalizations.of(context)!.getMonth(index + 1)),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedMonth =
-                        DateTime(_selectedMonth.year, int.parse(value!));
-                    _fetchData();
-                  });
-                },
-              ),
-              SizedBox(width: 10),
-              DropdownButton<String>(
-                value: _selectedMonth.year.toString(),
-                items: _years.map((int value) {
-                  return DropdownMenuItem<String>(
-                    value: value.toString(),
-                    child: Text(value.toString()),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedMonth =
-                        DateTime(int.parse(value!), _selectedMonth.month);
-                    _fetchData();
-                  });
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DropdownButton<String>(
+                    value: _selectedMonth.month.toString(),
+                    items: List.generate(12, (index) {
+                      return DropdownMenuItem<String>(
+                        value: (index + 1).toString(),
+                        child: Text(
+                            AppLocalizations.of(context)!.getMonth(index + 1)),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedMonth =
+                            DateTime(_selectedMonth.year, int.parse(value!));
+                        _fetchData();
+                      });
+                    },
+                  ),
+                  SizedBox(width: 10),
+                  DropdownButton<String>(
+                    value: _selectedMonth.year.toString(),
+                    items: _years.map((int value) {
+                      return DropdownMenuItem<String>(
+                        value: value.toString(),
+                        child: Text(value.toString()),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedMonth =
+                            DateTime(int.parse(value!), _selectedMonth.month);
+                        _fetchData();
+                      });
+                    },
+                  ),
+                ],
               ),
             ],
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                'User ID: $_userId',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
           ),
         ],
       ),
@@ -170,6 +187,9 @@ class _StatsScreenState extends State<StatsScreen> {
     // Actualiza el estado con las nuevas secciones
     setState(() {
       _sections = sections;
+      setState(() {  // Actualizamos el userId en el estado
+        _userId = userId;
+      });
     });
   }
 }

@@ -1,89 +1,44 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
+import 'department_edit_screen.dart';
 
-class DepartmentsScreen extends StatefulWidget {
+class DepartmentsScreen extends StatelessWidget {
   @override
-  _DepartmentsScreenState createState() => _DepartmentsScreenState();
-}
-
-class _DepartmentsScreenState extends State<DepartmentsScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  String _description = '';
-  String _managerAssigned = '';
-  String _name = '';
-
-  @override
-  Widget build(BuildContext) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Crear departamento'),
+        title: Text('Departments'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              TextFormField(
-                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.name),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AppLocalizations.of(context)!.plsaddname;
-                  }
-                  return null;
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('departamentos').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          return ListView(
+            children: snapshot.data!.docs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+              final String nombre = data['nombre'] ?? ''; // Si es null, se asignará una cadena vacía.
+              final String descripcion = data['description'] ?? ''; // Si es null, se asignará una cadena vacía.
+              final String gerenteAsignado = data['gerenteAsignado'] ?? ''; // Si es null, se asignará una cadena vacía.
+
+              return ListTile(
+                title: Text(nombre),
+                subtitle: Text(descripcion),
+                trailing: Text(gerenteAsignado),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => DepartmentEditScreen(document.id)));
                 },
-                onChanged: (value) {
-                  setState(() {
-                    _name = value;
-                  });
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.description),
-                onChanged: (value) {
-                  setState(() {
-                    _description = value;
-                  });
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.manager),
-                onChanged: (value) {
-                  setState(() {
-                    _managerAssigned = value;
-                  });
-                },
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _submitForm,
-                child: Text(AppLocalizations.of(context)!.addDepartment),
-              ),
-            ],
-          ),
-        ),
+              );
+            }).toList(),
+          );
+        },
       ),
     );
-  }
-
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      // Guardar los datos en Firestore
-      _firestore.collection('departamentos').add({
-        'nombre': _name,
-        'description': _description,
-        'gerenteAsignado': _managerAssigned,
-      });
-
-      // Mostrar un mensaje de éxito y cerrar la pantalla
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.succesfulDepartment)),
-      );
-      Navigator.pop(context);
-    }
   }
 }

@@ -4,7 +4,7 @@
     name=":app"
     type="APP"
     maven="android:app:"
-    gradle="7.2.0"
+    gradle="7.2.2"
     buildFolder="E:\Proyecto\gestionate\gestionrh\build\app"
     bootClassPath="C:\Users\Alusky\AppData\Local\Android\sdk\platforms\android-33\android.jar;C:\Users\Alusky\AppData\Local\Android\sdk\build-tools\30.0.3\core-lambda-stubs.jar"
     javaSourceLevel="1.8"

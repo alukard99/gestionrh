@@ -42,10 +42,10 @@ library {
   maven_library {
     groupId: "org.jetbrains.kotlin"
     artifactId: "kotlin-stdlib"
-    version: "1.7.10"
+    version: "1.8.0"
   }
   digests {
-    sha256: "\347q\376t%\n\224>\217cFq2\001\377\035\214\271\\:]\032\221\242+e\251\340Oj\211\001"
+    sha256: "\307{\357\207td\v\237\271\326\342\027E\237\362 \332\345\230x\276\267\322\344\2640Po\357\374eN"
   }
   repo_index {
     value: 1
@@ -55,10 +55,10 @@ library {
   maven_library {
     groupId: "org.jetbrains.kotlin"
     artifactId: "kotlin-stdlib-common"
-    version: "1.7.10"
+    version: "1.8.0"
   }
   digests {
-    sha256: "\031\361\002\357\351b\237\216\253\3068S\255\025\3053\344|G\371\037\312\t(\\[\336\206\345\237\221\324"
+    sha256: "x\357\223\265\236`<\300\376Q\336\371\275L\003{\a\313\254\343\263\267\200m\032I\nB\274\037L\262"
   }
   repo_index {
     value: 1
@@ -355,10 +355,10 @@ library {
   maven_library {
     groupId: "org.jetbrains.kotlin"
     artifactId: "kotlin-stdlib-jdk8"
-    version: "1.6.21"
+    version: "1.8.0"
   }
   digests {
-    sha256: "\332\264T\211\264w6\325\237\316D\270\006v\361\224z\233k\312\261\017\326\016\207\212\203\275\202\246\225L"
+    sha256: "\005\266(\004D\033\f\232\031 \266\267\325\317s)\244\342KbXG\2162\261\360F\312\001\220\tF"
   }
   repo_index {
     value: 1
@@ -368,10 +368,10 @@ library {
   maven_library {
     groupId: "org.jetbrains.kotlin"
     artifactId: "kotlin-stdlib-jdk7"
-    version: "1.7.10"
+    version: "1.8.0"
   }
   digests {
-    sha256: "T\366\023Q\261\223j\330\217NS\005\237\347\201\347#\352\345\035x\355\236t\"\330\264\003WN\306\202"
+    sha256: "L\210\235\035\230\003\365\362\353l\025\222\246\267\346#i\254v`\311\356\341Z\272\026\376\300Y\0266f"
   }
   repo_index {
     value: 1
@@ -1205,7 +1205,7 @@ library {
 }
 library {
   digests {
-    sha256: "\243\247a5\356\214\373\220\325\241u\275\336\375Z\377/\304\241\236f\256G\227~\376\324.|#\244\273"
+    sha256: "G\226\313\220D\257\215=\037S=v\333\232M\215\340C\346&\303\215HhGi@\311\031\330\214t"
   }
 }
 library_dependencies {

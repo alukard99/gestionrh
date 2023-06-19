@@ -50,67 +50,60 @@ class _CalendarScreenState extends State<CalendarScreen> {
           Expanded(
             child: _selectedDay != null
                 ? StreamBuilder<QuerySnapshot>(
-              // Comprueba si el usuario no es nulo (Ha cerrado sesión)
               stream: widget.userId != null
                   ? _firestore
                   .collection('horas')
                   .where('userId', isEqualTo: widget.userId)
                   .snapshots()
-                  : Stream.empty(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      }
+                  : const Stream.empty(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
 
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
-                      }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                }
 
-                      // Filtrar los documentos por la fecha seleccionada
-                      final List<DocumentSnapshot> filteredDocs =
-                          snapshot.data!.docs.where((doc) {
-                        return doc['date_year'] == _selectedDay!.year &&
-                            doc['date_month'] == _selectedDay!.month &&
-                            doc['date_day'] == _selectedDay!.day;
-                      }).toList();
+                final List<DocumentSnapshot> filteredDocs =
+                snapshot.data!.docs.where((doc) {
+                  return doc['date_year'] == _selectedDay!.year &&
+                      doc['date_month'] == _selectedDay!.month &&
+                      doc['date_day'] == _selectedDay!.day;
+                }).toList();
 
-                      return ListView.builder(
-                        itemCount: filteredDocs.length,
-                        itemBuilder: (context, index) {
-                          DocumentSnapshot hourData = filteredDocs[index];
+                return ListView.separated(
+                  itemCount: filteredDocs.length,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const Divider(color: Colors.grey);
+                  },
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot hourData = filteredDocs[index];
 
-                          // Construye el objeto DateTime a partir de los campos de la fecha
-                          DateTime date = DateTime(
-                            hourData['date_year'],
-                            hourData['date_month'],
-                            hourData['date_day'],
-                          );
+                    String hours = hourData['hours'].toString();
+                    Map<int, String> categoryMap = {
+                      0: AppLocalizations.of(context)!.normalHours,
+                      1: AppLocalizations.of(context)!.extraHours,
+                      2: AppLocalizations.of(context)!.vacationHours,
+                      3: AppLocalizations.of(context)!.medicalLeaveHours,
+                      4: AppLocalizations.of(context)!.festiveHours,
+                    };
+                    int category = hourData['category'];
+                    String sCategory = categoryMap[category] ?? AppLocalizations.of(context)!.unknowCategory;
 
-                          String hours = hourData['hours'].toString();
-                          Map<int, String> categoryMap = {
-                            0: AppLocalizations.of(context)!.addHours,
-                            1: AppLocalizations.of(context)!.extraHours,
-                            2: AppLocalizations.of(context)!.vacationHours,
-                            3: AppLocalizations.of(context)!.medicalLeaveHours,
-                            4: AppLocalizations.of(context)!.festiveHours,
-                          };
-                          int category = hourData['category'];
-                          String sCategory = categoryMap[category] ?? AppLocalizations.of(context)!.unknowCategory;
+                    // Formato de las horas mostradas
+                    String formattedHours = "${hours}h";
 
-                          // Formato de las horas mostradas
-                          String formattedHours = "${hours}h";
-
-                          return ListTile(
-                            title: Text('${date.day}/${date.month}/${date.year}'),
-                            subtitle: Text('$formattedHours, $sCategory'),
-                          );
-                        },
-                      );
-                    },
-                  )
+                    return ListTile(
+                      title: Text('$formattedHours, $sCategory'),
+                    );
+                  },
+                );
+              },
+            )
                 : Center(
-                    child: Text(AppLocalizations.of(context)!.plschoosedate),
-                  ),
+              child: Text(AppLocalizations.of(context)!.plschoosedate),
+            ),
           ),
           FutureBuilder<QuerySnapshot>(
             future: _firestore
@@ -125,7 +118,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               }
 
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }
 
               final int totalDays =

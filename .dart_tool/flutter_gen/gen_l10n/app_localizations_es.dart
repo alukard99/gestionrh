@@ -38,6 +38,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get department => 'Departamento';
 
   @override
+  String get departments => 'Departamentos';
+
+  @override
   String get employees => 'Empleados';
 
   @override
@@ -125,6 +128,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get editHours => 'Editar horas';
 
   @override
+  String get hourDeleted => 'Registro borrado';
+
+  @override
   String get january => 'Enero';
 
   @override
@@ -198,6 +204,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get googleSignInError => 'Error al iniciar sesión con Google.';
+
+  @override
+  String get googleCreateAccount => 'Crear cuenta';
 
   @override
   String get delete => 'Borrar';

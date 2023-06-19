@@ -64,6 +64,7 @@
   "userNotInColection": "Der Benutzer ist nicht in der Sammlung",
   "googleSignIn": "Mit Google anmelden",
   "googleSignInError": "Fehler beim Anmelden mit Google.",
+  "googleCreateAccount": "Neue Konto",
   "delete": "Löschen",
   "create": "Erstellen",
   "createEmployee": "Mitarbeiter erstellen"

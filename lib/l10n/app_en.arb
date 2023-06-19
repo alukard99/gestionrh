@@ -64,6 +64,7 @@
   "userNotInColection": "User is not in the collection",
   "googleSignIn": "Sign in with Google",
   "googleSignInError": "Error signing in with Google.",
+  "googleCreateAccount": "Create account",
   "delete": "Delete",
   "create": "Create",
   "createEmployee": "Create employee"

@@ -3,6 +3,7 @@ import 'package:gestionrh/screens/admin/hours_screen.dart';
 import 'admin/department_screen.dart';
 import 'admin/employee_main_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class AdminScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@
             "outputFile": "com.alukard.gestionrh.app-mergeReleaseResources-15:/values-en-rCA/values-en-rCA.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Alusky\\.gradle\\caches\\transforms-3\\1141b72fb8be4e566e7814849b1aa3a2\\transformed\\core-1.6.0\\res\\values-en-rCA\\values-en-rCA.xml",
+                    "source": "C:\\Users\\Alusky\\.gradle\\caches\\transforms-3\\21c6bfe7d8d7acbcb1e88ffea96dcb0e\\transformed\\core-1.6.0\\res\\values-en-rCA\\values-en-rCA.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Alusky\\.gradle\\caches\\transforms-3\\c1463af6cb467bf02a2c891016443d37\\transformed\\browser-1.4.0\\res\\values-en-rCA\\values-en-rCA.xml",
+                    "source": "C:\\Users\\Alusky\\.gradle\\caches\\transforms-3\\fd9c310c76dd7672890c4b57104803b2\\transformed\\browser-1.4.0\\res\\values-en-rCA\\values-en-rCA.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",

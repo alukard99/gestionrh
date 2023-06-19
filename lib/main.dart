@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gestionrh/providers/locale_provider.dart';
 import 'package:gestionrh/screens/login_screen.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,7 @@ import 'package:gestionrh/changeNotifier.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]); //Fuerza modo vertical
   runApp(
     MultiProvider(
       providers: [

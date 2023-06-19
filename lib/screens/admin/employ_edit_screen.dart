@@ -59,62 +59,64 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.editEmployee),
       ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              initialValue: _dni,
-              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.dni),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return AppLocalizations.of(context)!.plsadddni;
-                }
-                return null;
-              },
-              onSaved: (value) {
-                _dni = value;
-              },
-            ),
-            TextFormField(
-              initialValue: _puesto,
-              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.position),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return AppLocalizations.of(context)!.plsaddposition;
-                }
-                return null;
-              },
-              onSaved: (value) {
-                _puesto = value;
-              },
-            ),
-            TextFormField(
-              initialValue: _departamento,
-              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.department),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return AppLocalizations.of(context)!.plsadddepartment;
-                }
-                return null;
-              },
-              onSaved: (value) {
-                _departamento = value;
-              },
-            ),
-            ElevatedButton(
-              onPressed: _saveEmployee,
-              child: Text(AppLocalizations.of(context)!.save),
-            ),
-            ElevatedButton(
-              onPressed: _deleteEmployee,
-              child: Text(AppLocalizations.of(context)!.delete),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red, // background
-                onPrimary: Colors.white, // foreground
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                initialValue: _dni,
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.dni),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppLocalizations.of(context)!.plsadddni;
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _dni = value;
+                },
               ),
-            ),
-          ],
+              TextFormField(
+                initialValue: _puesto,
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.position),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppLocalizations.of(context)!.plsaddposition;
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _puesto = value;
+                },
+              ),
+              TextFormField(
+                initialValue: _departamento,
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.department),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppLocalizations.of(context)!.plsadddepartment;
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _departamento = value;
+                },
+              ),
+              ElevatedButton(
+                onPressed: _saveEmployee,
+                child: Text(AppLocalizations.of(context)!.save),
+              ),
+              ElevatedButton(
+                onPressed: _deleteEmployee,
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white, backgroundColor: Colors.red, // foreground
+                ),
+                child: Text(AppLocalizations.of(context)!.delete),
+              ),
+            ],
+          ),
         ),
       ),
     );

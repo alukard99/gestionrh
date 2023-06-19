@@ -10,6 +10,7 @@
   "options": "Opciones",
   "stats": "Estadísticas",
   "department": "Departamento",
+  "departments": "Departamentos",
   "employees": "Empleados",
   "name": "Nombre",
   "description": "Descripción",
@@ -39,6 +40,7 @@
   "saved": "Cambios guardados",
   "search": "Buscar",
   "editHours": "Editar horas",
+  "hourDeleted": "Registro borrado",
   "january": "Enero",
   "february": "Febrero",
   "march": "Marzo",
@@ -64,6 +66,7 @@
   "userNotInColection": "El usuario no está en la colección",
   "googleSignIn": "Iniciar sesión con Google",
   "googleSignInError": "Error al iniciar sesión con Google.",
+  "googleCreateAccount": "Crear cuenta",
   "delete": "Borrar",
   "create": "Crear",
   "createEmployee": "Crear empleado"

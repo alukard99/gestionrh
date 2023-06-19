@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'employ_edit_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'employ_edit_screen.dart';
 import 'new_employee_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class EmployeeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Employees'),
+        title: Text(AppLocalizations.of(context)!.employees),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               showSearch(
                 context: context,
-                delegate: EmployeeSearch("dni"), // Aquí se proporciona "dni" como campo de búsqueda
+                delegate: EmployeeSearch("dni"),
               );
             },
           ),
@@ -28,7 +27,7 @@ class EmployeeScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => NewEmployeeScreen(), // Navega a la pantalla de creación de empleados
+                  builder: (context) => NewEmployeeScreen(),
                 ),
               );
             },
@@ -49,17 +48,24 @@ class EmployeeScreen extends StatelessWidget {
           return ListView(
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-              return ListTile(
-                title: Text(data['dni']),
-                subtitle: Text('${data['puesto']} - ${data['departamento']}'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EmployeeEditScreen(document.id), // Navega a la pantalla de edición con el id del empleado.
-                    ),
-                  );
-                },
+              return Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 0.5, color: Colors.grey),
+                  ),
+                ),
+                child: ListTile(
+                  title: Text(data['dni']),
+                  subtitle: Text('${data['puesto']} - ${data['departamento']}'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EmployeeEditScreen(document.id),
+                      ),
+                    );
+                  },
+                ),
               );
             }).toList(),
           );

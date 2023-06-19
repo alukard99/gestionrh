@@ -11,39 +11,51 @@ class HoursScreen extends StatefulWidget {
 class _HoursScreenState extends State<HoursScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final User? _user = FirebaseAuth.instance.currentUser;
-  late Stream<QuerySnapshot> _stream;
   final _searchController = TextEditingController();
   String _searchType = 'hours';
+  List<DocumentSnapshot> _fullData = []; // Esta es la lista completa de datos
+  List<DocumentSnapshot> _data = []; // Esta es la lista de datos filtrados
 
   @override
   void initState() {
     super.initState();
-    _stream = _firestore
+    _fetchData();
+  }
+
+  Future<void> _fetchData() async {
+    final snapshot = await _firestore
         .collection('horas')
         .where('userId', isEqualTo: _user?.uid)
         .orderBy('insertDate', descending: true)
-        .snapshots();
+        .get();
+
+    setState(() {
+      _fullData = snapshot.docs; // Almacenamos todos los datos en _fullData
+      _data = _fullData; // Y también los copiamos a _data
+    });
   }
 
   void _search() {
     final query = _searchController.text;
     if (query.isNotEmpty) {
-      _stream = _firestore
-          .collection('horas')
-          .where('userId', isEqualTo: _user?.uid)
-          .orderBy(_searchType)
-          .startAt([int.parse(query)]).endAt([
-        int.parse(query) + 1
-      ]) // incremento de 1 para incluir el número buscado
-          .snapshots();
+      setState(() {
+        _data = _fullData.where((doc) { // La búsqueda se realiza sobre _fullData
+          final data = doc.data() as Map<String, dynamic>;
+          final searchField = data[_searchType];
+          if (searchField is int) {
+            final queryInt = int.tryParse(query);
+            if (queryInt != null) {
+              return searchField == queryInt;
+            }
+          } else if (searchField is String) {
+            return searchField.contains(query);
+          }
+          return false;
+        }).toList();
+      });
     } else {
-      _stream = _firestore
-          .collection('horas')
-          .where('userId', isEqualTo: _user?.uid)
-          .orderBy('insertDate', descending: true)
-          .snapshots();
+      _fetchData();
     }
-    setState(() {});
   }
 
   @override
@@ -94,31 +106,24 @@ class _HoursScreenState extends State<HoursScreen> {
             ),
           ),
           Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: _stream,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                final docs = snapshot.data!.docs;
-                return ListView.builder(
-                  itemCount: docs.length,
-                  itemBuilder: (context, index) {
-                    final doc = docs[index];
-                    final data = doc.data() as Map<String, dynamic>;
-                    return ListTile(
-                      title: Text(
-                        'Category: ${data['category']}, Hours: ${data['hours']}',
-                      ),
-                      subtitle: Text('Date: ${data['insertDate'].toDate()}'),
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditHoursScreen(docId: doc.id),
-                        ),
-                      ),
-                    );
-                  },
+            child: _data.isEmpty
+                ? Center(child: Text(AppLocalizations.of(context)!.noData))
+                : ListView.builder(
+              itemCount: _data.length,
+              itemBuilder: (context, index) {
+                final doc = _data[index];
+                final data = doc.data() as Map<String, dynamic>;
+                return ListTile(
+                  title: Text(
+                    '${data['date_day']}/${data['date_month']}/${data['date_year']}',
+                  ),
+                  subtitle: Text('${AppLocalizations.of(context)!.hours}: ${data['hours']}'),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditHoursScreen(docId: doc.id),
+                    ),
+                  ),
                 );
               },
             ),
@@ -155,6 +160,18 @@ class _EditHoursScreenState extends State<EditHoursScreen> {
     _monthController.dispose();
     _yearController.dispose();
     super.dispose();
+  }
+
+  Future<void> _deleteData() async {
+    await _firestore.collection('horas').doc(widget.docId).delete();
+
+    // Muestra un SnackBar para informar al usuario
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(AppLocalizations.of(context)!.hourDeleted)),
+    );
+
+    // Regresa a la pantalla anterior
+    Navigator.of(context).pop();
   }
 
   @override
@@ -224,7 +241,7 @@ class _EditHoursScreenState extends State<EditHoursScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     child: Text(AppLocalizations.of(context)!.editHours),
                     onPressed: () {
@@ -245,6 +262,13 @@ class _EditHoursScreenState extends State<EditHoursScreen> {
                         });
                       }
                     },
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white, backgroundColor: Colors.red, // Color del texto
+                    ),
+                    onPressed: _deleteData,
+                    child: Text(AppLocalizations.of(context)!.delete),
                   ),
                 ],
               ),

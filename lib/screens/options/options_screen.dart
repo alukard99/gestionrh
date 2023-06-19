@@ -16,55 +16,56 @@ class OptionsScreen extends StatelessWidget {
       ),
     );
   }
-  //Botones para cambiar la configuración
-  Widget _buildOption(BuildContext context, String title, int optionNumber) {
-    return ListTile(
-      title: Text(title),
-      trailing: Icon(Icons.arrow_forward_ios),
-      onTap: () {
-        _onOptionTapped(context, optionNumber);
-      },
-    );
-  }
   //Botón para cambiar el lenguaje
   Widget _buildLanguageOption(BuildContext context) {
     var localeProvider = Provider.of<LocaleProvider>(context);
-    return DropdownButton(
-        value: localeProvider.locale,
-        items: AppLocalizations.supportedLocales.map((locale) {
-      String localeName = locale.languageCode;
-      switch (localeName) {
-        case 'en':
-          localeName = 'English';
-          break;
-        case 'es':
-          localeName = 'Español';
-          break;
-        case 'de':
-          localeName = 'Deutsch';
-          break;
-      }
-      return DropdownMenuItem(
-        value: locale,
-        child: Text(localeName),
-      );
-        }).toList(),
-      onChanged: (locale) {
-        localeProvider.setLocale(locale!);
-      },
-    );
-  }
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        decoration: BoxDecoration(
+          border: Border.all(),
+          borderRadius: BorderRadius.circular(3.0),
+        ),
+        child: DropdownButtonHideUnderline(  // para esconder la línea subrayada
+          child: DropdownButton(
+            value: localeProvider.locale,
+            isExpanded: true,  // para hacer que DropdownButton ocupe todo el espacio disponible
+            items: AppLocalizations.supportedLocales.asMap().entries.map((entry) {
+              int index = entry.key;
+              Locale locale = entry.value;
 
-  void _onOptionTapped(BuildContext context, int optionNumber) {
-    switch (optionNumber) {
-      case 1:
-      // Navigator.push(context, MaterialPageRoute(builder: (context) => DestinationWidget1()));
-        break;
-      case 2:
-      // Navigator.push(context, MaterialPageRoute(builder: (context) => DestinationWidget2()));
-        break;
-      default:
-        break;
-    }
+              String localeName = locale.languageCode;
+              switch (localeName) {
+                case 'en':
+                  localeName = 'English';
+                  break;
+                case 'es':
+                  localeName = 'Español';
+                  break;
+                case 'de':
+                  localeName = 'Deutsch';
+                  break;
+              }
+              Color color = (index % 2 == 0) ? Colors.grey[200]! : Colors.white;  // Color gris claro para índices pares, blanco para índices impares
+              return DropdownMenuItem(
+                value: locale,
+                child: Container(
+                  width: double.infinity,
+                  color: color,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.0),
+                    child: Text(localeName),
+                  ),
+                ),
+              );
+            }).toList(),
+            onChanged: (locale) {
+              localeProvider.setLocale(locale!);
+            },
+          ),
+        ),
+      ),
+    );
   }
 }

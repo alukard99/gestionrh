@@ -24,7 +24,7 @@ class _StatsScreenState extends State<StatsScreen> {
     4: const Color(0xFF008B8B),
   };
 
-  final List<int> _years = List<int>.generate(101, (i) => 2000 + i);
+  final List<int> _years = List<int>.generate(101, (i) => 2000 + i); // TODO El 31 de diciembre de 2100 hay que añadir mas años.
   String _userId = '';
 
 
@@ -48,17 +48,17 @@ class _StatsScreenState extends State<StatsScreen> {
         children: [
           Column(
             children: [
-              _sections.isNotEmpty
-                  ? Container(
-                height: 400, // define el alto del contenedor
-                child: PieChart(
-                  PieChartData(
-                    sections: _sections,
+              Expanded(
+                child: _sections.isNotEmpty
+                    ? Container(
+                  height: 400, // define el alto del contenedor
+                  child: PieChart(
+                    PieChartData(
+                      sections: _sections,
+                    ),
                   ),
-                ),
-              )
-                  : Expanded(
-                child: Center(
+                )
+                    : Center(
                   child: Text(
                     AppLocalizations.of(context)!.noData,
                     style: const TextStyle(
@@ -68,44 +68,62 @@ class _StatsScreenState extends State<StatsScreen> {
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  DropdownButton<String>(
-                    value: _selectedMonth.month.toString(),
-                    items: List.generate(12, (index) {
-                      return DropdownMenuItem<String>(
-                        value: (index + 1).toString(),
-                        child: Text(
-                            AppLocalizations.of(context)!.getMonth(index + 1)),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedMonth =
-                            DateTime(_selectedMonth.year, int.parse(value!));
-                        _fetchData();
-                      });
-                    },
-                  ),
-                  SizedBox(width: 10),
-                  DropdownButton<String>(
-                    value: _selectedMonth.year.toString(),
-                    items: _years.map((int value) {
-                      return DropdownMenuItem<String>(
-                        value: value.toString(),
-                        child: Text(value.toString()),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedMonth =
-                            DateTime(int.parse(value!), _selectedMonth.month);
-                        _fetchData();
-                      });
-                    },
-                  ),
-                ],
+              Container(
+                height: 150, // Ajusta este valor según tus necesidades
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    DropdownButton<String>(
+                      value: _selectedMonth.month.toString(),
+                      items: List.generate(12, (index) {
+                        return DropdownMenuItem<String>(
+                          value: (index + 1).toString(),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(color: Colors.grey), // define el color del borde aquí
+                              ),
+                            ),
+                            child: Text(
+                                AppLocalizations.of(context)!.getMonth(index + 1)
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedMonth =
+                              DateTime(_selectedMonth.year, int.parse(value!));
+                          _fetchData();
+                        });
+                      },
+                    ),
+                    SizedBox(width: 20),
+                    DropdownButton<String>(
+                      value: _selectedMonth.year.toString(),
+                      items: _years.map((int value) {
+                        return DropdownMenuItem<String>(
+                          value: value.toString(),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(color: Colors.grey), // define el color del borde aquí
+                              ),
+                            ),
+                            child: Text(value.toString()),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedMonth =
+                              DateTime(int.parse(value!), _selectedMonth.month);
+                          _fetchData();
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -116,7 +134,7 @@ class _StatsScreenState extends State<StatsScreen> {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
-                'User ID: $_userId',
+                '$_userId',
                 style: TextStyle(fontSize: 20),
               ),
             ),
@@ -141,11 +159,11 @@ class _StatsScreenState extends State<StatsScreen> {
 
     // Mapa para convertir números de categorías a nombres de categoría
     Map<int, String> categoryNames = {
-      1: AppLocalizations.of(context)!.normalHours,
-      2: AppLocalizations.of(context)!.extraHours,
-      3: AppLocalizations.of(context)!.vacationHours,
-      4: AppLocalizations.of(context)!.medicalLeaveHours,
-      5: AppLocalizations.of(context)!.festiveHours,
+      0: AppLocalizations.of(context)!.normalHours,
+      1: AppLocalizations.of(context)!.extraHours,
+      2: AppLocalizations.of(context)!.vacationHours,
+      3: AppLocalizations.of(context)!.medicalLeaveHours,
+      4: AppLocalizations.of(context)!.festiveHours,
     };
 
     //Consulta para recibir registros
@@ -169,7 +187,7 @@ class _StatsScreenState extends State<StatsScreen> {
     List<PieChartSectionData> sections = [];
     hourTotals.forEach((categoryNum, hours) {
       if (hours > 0) {
-        final categoryName = categoryNames[categoryNum] ?? 'Desconocido';
+        final categoryName = categoryNames[categoryNum] ?? 'Otras';
         final hourStr = (hours % 1 == 0) ? hours.toInt().toString() : hours.toStringAsFixed(1);
         sections.add(
           PieChartSectionData(
@@ -187,8 +205,15 @@ class _StatsScreenState extends State<StatsScreen> {
     // Actualiza el estado con las nuevas secciones
     setState(() {
       _sections = sections;
-      setState(() {  // Actualizamos el userId en el estado
-        _userId = userId;
+      // Actualiza el nombre del usuario en el estado
+      setState(() {
+        if (user != null && user.displayName != null) { // Chequea si el displayName no es null
+          _userId = user.displayName!;
+        } else if (user != null && user.email != null) { // Si displayName es null, usa email
+          _userId = user.email!;
+        } else {
+          _userId = 'Usuario desconocido'; // En caso de que ambos sean null, usa un valor por defecto
+        }
       });
     });
   }

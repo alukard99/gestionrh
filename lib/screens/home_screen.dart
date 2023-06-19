@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'calendar_screen.dart';
 import 'add_hours_screen.dart';
+import 'login_screen.dart';
 import 'stats_screen.dart';
 import 'admin_screen.dart';
 import 'options/options_screen.dart';
@@ -44,7 +45,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gestionate'),
+        title: const Text('Gestionate'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => LoginScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: _getBody(_currentIndex),
       bottomNavigationBar: BottomNavigationBar(
@@ -98,13 +110,13 @@ class _HomeScreenState extends State<HomeScreen> {
         final String userId = user != null ? user.uid : '';
         return CalendarScreen(userId: userId); // Retorna el widget correspondiente a Calendario.
       case 1:
-        return AddHoursScreen(); // Retorna el widget correspondiente a Agregar horas
+        return AddHoursScreen(); // Devuelve el widget correspondiente a Agregar horas
       case 2:
-        return StatsScreen(); // Retorna el widget correspondiente a Inicio
+        return StatsScreen(); // Devuelve el widget correspondiente a Inicio
       case 3:
-        return AdminScreen(); // Retorna el widget correspondiente a Admin
+        return AdminScreen(); // Devuelve el widget correspondiente a Admin
       case 4:
-        return OptionsScreen(); // Retorna el widget correspondiente a Opciones
+        return OptionsScreen(); // Devuelve el widget correspondiente a Opciones
       default:
         return Container(); // Por si acaso
     }

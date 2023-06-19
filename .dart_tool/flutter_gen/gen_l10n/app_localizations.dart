@@ -161,6 +161,12 @@ abstract class AppLocalizations {
   /// **'Departamento'**
   String get department;
 
+  /// No description provided for @departments.
+  ///
+  /// In es, this message translates to:
+  /// **'Departamentos'**
+  String get departments;
+
   /// No description provided for @employees.
   ///
   /// In es, this message translates to:
@@ -335,6 +341,12 @@ abstract class AppLocalizations {
   /// **'Editar horas'**
   String get editHours;
 
+  /// No description provided for @hourDeleted.
+  ///
+  /// In es, this message translates to:
+  /// **'Registro borrado'**
+  String get hourDeleted;
+
   /// No description provided for @january.
   ///
   /// In es, this message translates to:
@@ -484,6 +496,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Error al iniciar sesión con Google.'**
   String get googleSignInError;
+
+  /// No description provided for @googleCreateAccount.
+  ///
+  /// In es, this message translates to:
+  /// **'Crear cuenta'**
+  String get googleCreateAccount;
 
   /// No description provided for @delete.
   ///

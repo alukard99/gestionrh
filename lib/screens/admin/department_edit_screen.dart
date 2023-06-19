@@ -20,7 +20,7 @@ class _DepartmentEditScreenState extends State<DepartmentEditScreen> {
   void initState() {
     super.initState();
 
-    FirebaseFirestore.instance.collection('departamentos').doc(widget.departmentId).get().then((snapshot) {
+    FirebaseFirestore.instance.collection('departamentos').doc(widget.departmentId).get().then((snapshot) { //Crea la instancia de la colección
       setState(() {
         final data = snapshot.data() as Map<String, dynamic>;
         _nombre = data['nombre'];
@@ -30,7 +30,7 @@ class _DepartmentEditScreenState extends State<DepartmentEditScreen> {
     });
   }
 
-  void _saveDepartment() {
+  void _saveDepartment() { //Guarda el departamento en la colección "departamentos"
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       FirebaseFirestore.instance.collection('departamentos').doc(widget.departmentId).update({
